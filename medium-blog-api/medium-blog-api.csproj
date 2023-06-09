@@ -16,8 +16,14 @@
 
   <ItemGroup>
     <None Remove="Models\" />
+    <None Remove="Models\User\" />
+    <None Remove="Models\Label\" />
+    <None Remove="Models\Article\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Models\User\" />
+    <Folder Include="Models\Label\" />
+    <Folder Include="Models\Article\" />
   </ItemGroup>
 </Project>
