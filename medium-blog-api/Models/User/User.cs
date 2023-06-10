@@ -1,8 +1,14 @@
 ﻿using System;
+namespace medium_blog_api;
 
 #region Default Convention
 public class User
 {
+    public User()
+    {
+        Articles = new List<Article>();
+    }
+
     public int Id { get; set; }
 
     public string? UserName { get; set; }

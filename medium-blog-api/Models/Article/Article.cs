@@ -1,8 +1,16 @@
 ﻿using System;
+namespace medium_blog_api;
 
 #region Default Convention
 public class Article
 {
+
+	public Article()
+	{
+		Users = new List<User>();
+		Labels = new List<Label>();
+	}
+
 	public int Id { get; set; }
 
 	public string? ImageUrl { get; set; }
