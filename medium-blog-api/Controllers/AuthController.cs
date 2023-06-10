@@ -6,7 +6,6 @@ using medium_blog_api.Data;
 using medium_blog_api.Dto;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace medium_blog_api.Controllers
 {
@@ -22,16 +21,33 @@ namespace medium_blog_api.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult UserRegister(UserRegisterDTO  dto)
+        public ActionResult UserRegister(UserRegisterDTO  user)
         {
             context.Users.Add(new medium_blog_api.User()
             {
-                Email = dto.Email,
-                Password = dto.Password,
-                UserName = dto.UserName
+                Email = user.Email,
+                Password = user.Password,
+                UserName = user.UserName
             });
             context.SaveChanges();
             return Ok();
+        }
+
+        [HttpPost("login")]
+        public ActionResult UserLogin(UserLoginDTO user)
+        {
+            var myUser = context.Users.FirstOrDefault(u => u.Email == user.Email
+                                                        && u.Password == user.Password);
+
+            if (myUser != null)
+            {
+                myUser.Password = null;
+                return Ok(myUser);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
     }
