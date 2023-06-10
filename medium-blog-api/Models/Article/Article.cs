@@ -23,8 +23,8 @@ public class Article
 
 	public DateTime CreatedDate { get; set; }
 
-	public ICollection<User>? Users { get; set; }
+	public ICollection<User> Users { get; set; }
 
-	public ICollection<Label>? Labels { get; set; }
+	public ICollection<Label> Labels { get; set; }
 }
 #endregion

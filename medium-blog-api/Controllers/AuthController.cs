@@ -23,7 +23,7 @@ namespace medium_blog_api.Controllers
         [HttpPost("register")]
         public ActionResult UserRegister(UserRegisterDTO  user)
         {
-            context.Users.Add(new medium_blog_api.User()
+            context.Users.Add(new User()
             {
                 Email = user.Email,
                 Password = user.Password,
