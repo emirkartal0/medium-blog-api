@@ -12,6 +12,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,11 +25,15 @@
     <None Remove="Models\User\" />
     <None Remove="Models\Label\" />
     <None Remove="Models\Article\" />
+    <None Remove="Dto\" />
+    <None Remove="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Models\User\" />
     <Folder Include="Models\Label\" />
     <Folder Include="Models\Article\" />
+    <Folder Include="Dto\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 </Project>

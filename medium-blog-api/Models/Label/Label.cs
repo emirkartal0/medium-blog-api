@@ -1,11 +1,13 @@
 ﻿using System;
-namespace medium_blog_api.Models.Label
+
+#region Default Convention
+public class Label
 {
-	public class Label
-	{
-		public Label()
-		{
-		}
-	}
+	public int Id { get; set; }
+
+	public string? Name { get; set; }
+
+	public ICollection<Article>? Articles { get; set; }
 }
+#endregion
 
