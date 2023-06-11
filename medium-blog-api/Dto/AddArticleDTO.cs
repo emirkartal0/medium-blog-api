@@ -13,7 +13,6 @@ namespace medium_blog_api.Dto
 
         public List<int> LabelIds { get; set; }
 
-        public int UserId { get; set; }
     }
 }
 

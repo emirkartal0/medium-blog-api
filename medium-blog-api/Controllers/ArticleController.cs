@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using medium_blog_api.Data;
 using medium_blog_api.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace medium_blog_api.Controllers
 {
@@ -21,20 +22,32 @@ namespace medium_blog_api.Controllers
         }
 
         [HttpPost("postArticle")]
+        [Authorize]
         public ActionResult PostArticle(AddArticleDTO article)
         {
-            context.Articles.Add(new Article()
+            var userId = int.Parse(User.FindFirst("id")?.Value);
+
+            var user = context.Users.Include(u => u.Articles).FirstOrDefault(u => u.Id == userId);
+            user.Articles.Add(new Article()
             {
                 ImageUrl = article.ImageUrl,
                 Title = article.Title,
                 Clap = article.Clap,
                 Content = article.Content,
-                CreatedDate = DateTime.Now,
-                //Users = article.Users,
-                //Labels = article.Labels
+                CreatedDate = DateTime.UtcNow,
+                Labels = article.LabelIds.Select(id => new Label() { Id = id }).ToList()
+                // auto saved user by entity framework
             });
+
             context.SaveChanges();
             return Ok();
+        }
+
+        [HttpGet("getArticles")]
+        public ActionResult GetAll()
+        {
+            var atricles = context.Articles.Include(a => a.Users);
+            return Ok(atricles);
         }
     }
 }
