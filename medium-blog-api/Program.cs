@@ -15,7 +15,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Buddy 4 Pets", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Medium-Blog App emirkartal", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {

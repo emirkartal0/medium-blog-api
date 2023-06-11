@@ -11,6 +11,7 @@ using medium_blog_api.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 
 
 namespace medium_blog_api.Controllers
@@ -29,14 +30,38 @@ namespace medium_blog_api.Controllers
         [HttpPost("register")]
         public ActionResult UserRegister(UserRegisterDTO  user)
         {
-            context.Users.Add(new User()
+            var dbUser = new User()
             {
                 Email = user.Email,
                 Password = user.Password,
                 UserName = user.UserName
-            });
+            };
+           
+
+            context.Users.Add(dbUser);
+
+            var expireTime = DateTime.Now.AddMinutes(60);
+            var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("SUPERKEYYYSUPERKEYYYSUPERKEYYYSUPERKEYYYSUPERKEYYYSUPERKEYYYSUPERKEYYYSUPERKEYYY"));
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            var claims = new List<Claim>
+            {
+                new Claim("id", dbUser.Id.ToString()),
+                new Claim("email", dbUser.Email.ToString())
+            };
+
+            var jwt = new JwtSecurityToken(
+                                expires: expireTime,
+                                notBefore: DateTime.Now,
+                                claims: claims,
+                                signingCredentials: signingCredentials
+                        );
+            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+            var token = jwtSecurityTokenHandler.WriteToken(jwt);
+
             context.SaveChanges();
-            return Ok();
+
+            return Ok(new { token });
         }
 
         [HttpPost("login")]
@@ -67,7 +92,7 @@ namespace medium_blog_api.Controllers
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var token = jwtSecurityTokenHandler.WriteToken(jwt);
 
-            return Ok(token);
+            return Ok(new { token });
         }
 
     }

@@ -46,7 +46,7 @@ namespace medium_blog_api.Controllers
         [HttpGet("getArticles")]
         public ActionResult GetAll()
         {
-            var atricles = context.Articles.Include(a => a.Users);
+            var atricles = context.Articles.Include(a => a.Users).Include(a => a.Labels);
             return Ok(atricles);
         }
     }
